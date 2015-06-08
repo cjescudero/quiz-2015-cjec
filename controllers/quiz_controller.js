@@ -17,7 +17,10 @@ exports.index = function(req,res) {
   var busqueda = req.query.search;
   busqueda=busqueda.replace(/\s+/g,'%');
   console.log("Filtro: " + busqueda);
-  models.Quiz.findAll({where: ['pregunta like ?', '%'+busqueda+'%']}).then(function(quizes) {
+  models.Quiz.findAll({
+      where: ['pregunta like ?', '%'+busqueda+'%'],
+      order: "pregunta ASC"
+      }).then(function(quizes) {
     res.render('quizes/index.ejs', {quizes: quizes});
   })
 };
