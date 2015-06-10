@@ -30,8 +30,8 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 var Quiz = sequelize.import(path.join(__dirname,'quiz'));
 exports.Quiz = Quiz;
 
-sequelize.sync().success(function() {
-  Quiz.count().success(function (count){
+sequelize.sync().then(function() {
+  Quiz.count().then(function (count){
     if (count === 0) {
       Quiz.create({pregunta: 'Capital de Italia',
                     respuesta: 'Roma'
