@@ -43,6 +43,17 @@ app.use(function(req, res, next) {
 
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
+
+  console.log(JSON.stringify(req.session));
+  var ahoramismo = new Date();
+  var lastaccess = new Date(req.session.lastaccess);
+  if ((ahoramismo - lastaccess) > 120000) {
+    console.log('Sesión caducada');
+    delete req.session.user;
+  }
+  res.locals.session.lastaccess = new Date();
+  console.log('Last access: ' + res.locals.session.lastaccess);
+
   next();
 });
 
