@@ -133,3 +133,25 @@ exports.destroy = function(req, res) {
     res.redirect('/quizes');
   }).catch(function(error){next(error)});
 };
+
+
+// GET /quizes/statistics
+exports.statistics = function(req,res) {
+  var npreguntas=4;
+  var ncomentarios=10;
+  var npreguntas_nocomment=1;
+
+  models.Quiz.count().then(function(nr) {
+      npreguntas=nr;
+      models.Comment.count().then(function(nc) {
+        ncomentarios=nc;
+        models.Quiz.count({
+            where: ['texto IS NULL'],
+            include: [{model: models.Comment}]
+          }).then(function(nr_wc) {
+            npreguntas_nocomment = npreguntas-nr_wc;
+            res.render('quizes/statistics.ejs', {errors: [], npreguntas: npreguntas, ncomentarios: ncomentarios, npreguntas_nocomment: npreguntas_nocomment});
+        })
+      })
+  })
+};

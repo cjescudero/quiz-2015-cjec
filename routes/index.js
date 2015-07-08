@@ -27,6 +27,7 @@ router.get('/quizes/new', sessionController.loginRequired, quizController.new);
 router.post('/quizes/create', sessionController.loginRequired, quizController.create);
 router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.destroy);
+router.get('/quizes/statistics', sessionController.loginRequired, quizController.statistics);
 
 router.get('/author', function(req,res) {
     res.render('authors', {errors: []});
